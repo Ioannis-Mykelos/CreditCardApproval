@@ -30,5 +30,6 @@ def logistic_regression(scaledX_train, y_train_df):
 
     # Get the accuracy score of logreg model and print it
     print("Accuracy of logistic regression classifier: ", logreg.score(scaledX_train, y_train_df))
+    print( confusion_matrix(y_train_df,y_pred))
    
     return (logreg.score(scaledX_train, y_train_df),  confusion_matrix(y_train_df,y_pred))
