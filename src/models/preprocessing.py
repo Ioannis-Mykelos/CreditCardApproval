@@ -1,6 +1,7 @@
 """
 preprocessing file.
 """
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix
