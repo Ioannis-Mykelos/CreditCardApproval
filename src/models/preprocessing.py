@@ -54,7 +54,7 @@ def best_logistic_regression(X_dataframe, y_dataframe):
     scaler = MinMaxScaler(feature_range=(0, 1))
     logreg = LogisticRegression()
     tol = [1, 0.1, 0.01, 0.001 ,0.0001]
-    max_iter = [10, 30, 40, 50, 100, 150, 200, 300]
+    max_iter = [50, 100, 150, 200]
     param_grid = dict(tol=tol, max_iter=max_iter)
     grid_model = GridSearchCV(estimator=logreg, param_grid=param_grid, cv=5)
     rescaledX = scaler.fit_transform(X_dataframe)
