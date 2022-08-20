@@ -54,6 +54,7 @@ def rename_columns(dataframe: pd.DataFrame)->pd.DataFrame:
     dictionary_columns = {0:'col1', 1:'col2', 3:'col3', 4:'col4', 5:'col5', 6:'col6', 
                       7:'col7', 8:'col8', 9:'col9', 10:'col10', 11:'col11', 12: 'col12',
                       13: 'col13', 14: 'col14', 15: 'col15'}
-    return dataframe.rename(columns = dictionary_columns, inplace = True)
-    
+    dataframe.rename(columns = dictionary_columns, inplace = True)
+    return dataframe
+
     
