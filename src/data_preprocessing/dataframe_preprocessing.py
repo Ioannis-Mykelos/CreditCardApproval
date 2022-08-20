@@ -61,7 +61,6 @@ def scale_data(dataframe_train: pd.DataFrame, dataframe_test: pd.DataFrame)->pd.
     -scaledX_test     :   The X_test dataframe scaled
     """
     scaler = MinMaxScaler(feature_range=(0, 1))
-    rescaledX_train = scaler.fit_transform(X_train)
-    rescaledX_test = scaler.transform(X_test)
+    rescaledX_train = scaler.fit_transform(dataframe_train)
+    rescaledX_test = scaler.transform(dataframe_test)
     return (rescaledX_train, rescaledX_test)
-    
