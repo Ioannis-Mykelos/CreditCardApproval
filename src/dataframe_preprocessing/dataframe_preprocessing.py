@@ -26,4 +26,4 @@ def encoding_the_columns(dataframe: pd.DataFrame)->pd.DataFrame:
             # Use LabelEncoder to do the numeric transformation
             dataframe[column]=le.fit_transform(dataframe[column])
     return dataframe
-    
+
