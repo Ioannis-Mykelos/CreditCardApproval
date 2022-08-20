@@ -38,3 +38,4 @@ def handle_nan_values(dataframe: pd.DataFrame)->pd.DataFrame:
             # Impute with the most frequent value
             dataframe = dataframe.fillna(dataframe[col].value_counts().index[0])
     return dataframe
+    
