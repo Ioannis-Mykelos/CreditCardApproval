@@ -37,7 +37,7 @@ def logistic_regression(scaledX_train, y_train_df):
 
     return (logreg.score(scaledX_train, y_train_df),  confusion_matrix(y_train_df,y_pred))
 
-def best_logistic_regression(X_dataframe: pd.DataFrame, y_dataframe:pd.DataFrame):
+def best_logistic_regression(X_dataframe, y_dataframe):
     """
     This function finds the best parameters and score
 

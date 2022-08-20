@@ -44,7 +44,7 @@ def split_data(dataframe: pd.DataFrame)->pd.DataFrame:
     dataframe = dataframe.to_numpy()
     X, y = dataframe[:,0:13] , dataframe[:,13]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-    return (X_train, X_test, y_train, y_test)
+    return (X, y, X_train, X_test, y_train, y_test)
 
 def scale_data(dataframe_train: pd.DataFrame, dataframe_test: pd.DataFrame):
     """
