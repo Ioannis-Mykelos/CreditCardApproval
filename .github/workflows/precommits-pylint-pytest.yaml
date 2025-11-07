@@ -165,7 +165,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Run of Pytest \\\`${{ steps.pytest.outcome }}\\\`
+            const output = `#### Run of Pytest \`${{ steps.pytest.outcome }}\`
             <details><summary>Show Outputs</summary>
             ${{ steps.pytest.outputs.pytest-output }}
             </details>
@@ -175,7 +175,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
-            })
+            });
 
       - name: Pytest status
         if: steps.pytest.outcome == 'failure'
