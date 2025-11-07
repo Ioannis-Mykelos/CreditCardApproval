@@ -158,7 +158,8 @@ jobs:
 
       - name: Generate coverage text file
         run: |
-          pytest --cov=src --cov-report=text:pytest-coverage.txt --quiet tests/ || true
+          # The 'text' report outputs to stdout, which we then redirect to a file.
+          pytest --cov=src --cov-report=text --quiet tests/ > pytest-coverage.txt || true
 
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
