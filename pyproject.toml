@@ -73,4 +73,4 @@ markers = [
     "sideeffect: mark a test as a having side effects, e.g. creating a costly compute cluster which might _not_ be deleted in case the test fails.",
     "slow: mark test as slow.",
 ]
-filterwarnings = ["ignore::DeprecationWarning"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning:pandas"]
