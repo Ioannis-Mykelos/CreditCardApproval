@@ -132,35 +132,32 @@ jobs:
       - name: Upgrade pip
         run: pip install --upgrade pip
 
-      - name: Install pytest and pytest-cov
-        run: pip install pytest==8.4.2 pytest-cov==5.0.0
+      - name: Install pytest
+        run: pip install pytest==8.2.2
 
-      - name: Install scikit-learn
-        run: pip install scikit-learn
+      - name: Install fuzzywuzzy
+        run: pip install fuzzywuzzy==0.18.0
 
       - name: Run pytest and generate coverage report
         id: pytest
         run: |
           set +e
-          pytest --junitxml=pytest.xml --cov=src --cov-report=term --cov-report=json --tb=short --verbose tests/ > err.log 2>&1
+          output=$(pytest --junitxml=pytest.xml --tb=short --verbose $(git ls-files 'test/test_*.py')> err.log)
           state=$(echo $?)
           err_output=$(cat err.log)
+          output="${output}\n${err_output}"
           delimiter="$(openssl rand -hex 8)"
           echo "pytest-output<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          echo "$err_output" >> "${GITHUB_OUTPUT}"
+          echo "$output" >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"
           set -e
           exit $state
         continue-on-error: True
 
-      - name: Generate coverage text file
-        run: pytest --cov=src --cov-report=text --quiet tests/ > pytest-coverage.txt || true
-
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
           junitxml-path: ./pytest.xml
-          pytest-coverage-path: ./pytest-coverage.txt
           create-new-comment: True
 
       - name: Update Pull Request
@@ -168,7 +165,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = ` - Run of Pytest \`${{ steps.pytest.outcome }}\`
+            const output = `#### Run of Pytest \`${{ steps.pytest.outcome }}\`
             <details><summary>Show Outputs</summary>
             ${{ steps.pytest.outputs.pytest-output }}
             </details>
