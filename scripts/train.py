@@ -14,18 +14,23 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+# pylint: disable=wrong-import-position
+# flake8: noqa: E402
 # Imports must come after sys.path modification to ensure correct module resolution
-from src.data_preprocessing.dataframe_manipulation import (
+from src.data_preprocessing.dataframe_manipulation import (  # noqa: E402
     handle_nan_values,
     load_data,
     rename_columns,
 )
-from src.data_preprocessing.dataframe_preprocessing import (
+from src.data_preprocessing.dataframe_preprocessing import (  # noqa: E402
     encoding_the_columns,
     scale_data,
     split_data,
 )
-from src.models.preprocessing import best_logistic_regression, logistic_regression
+from src.models.preprocessing import (  # noqa: E402
+    best_logistic_regression,
+    logistic_regression,
+)
 
 
 def main():
