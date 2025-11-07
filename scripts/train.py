@@ -31,6 +31,8 @@ from src.models.preprocessing import logistic_regression, best_logistic_regressi
 
 def main():
     """Main training pipeline."""
+    # pylint: disable=invalid-name
+    # ML variable names (X, y, X_train, etc.) are standard conventions
     print("Starting Credit Card Approval Model Training Pipeline...")
     print("=" * 60)
 
@@ -53,13 +55,15 @@ def main():
 
     # Step 5: Split data
     print("\n[5/6] Splitting data into train/test sets...")
-    X, y, X_train, X_test, y_train, y_test = split_data(df)
+    # X, y, X_train, X_test are standard ML variable names (features and target)
+    _, _, X_train, X_test, y_train, _ = split_data(df)
     print(f"Training set size: {len(X_train)}")
     print(f"Test set size: {len(X_test)}")
 
     # Step 6: Scale features
     print("\n[6/6] Scaling features...")
-    X_train_scaled, X_test_scaled = scale_data(X_train, X_test)
+    # X_test_scaled is unused but kept for potential future evaluation
+    X_train_scaled, _ = scale_data(X_train, X_test)
 
     # Step 7: Train model with default parameters
     print("\n" + "=" * 60)
