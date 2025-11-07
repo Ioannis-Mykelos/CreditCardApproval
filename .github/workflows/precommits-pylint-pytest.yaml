@@ -21,7 +21,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install pylint
-        run: pip install pylint==4.0.2
+        run: pip install pylint==3.1.0
 
       - name: Run pylint
         id: pylint
@@ -78,7 +78,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install pre-commit
-        run: pip install pre-commit==4.3.0
+        run: pip install pre-commit==3.5.0
 
       - name: Run pre-commit hooks
         id: precommit
@@ -125,9 +125,6 @@ jobs:
       - name: Install scipy
         run: pip install scipy==1.14.1
 
-      - name: Install scikit-learn
-        run: pip install scikit-learn
-
       # Set PYTHONPATH to include the current working directory (root)
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=./" >> $GITHUB_ENV
@@ -136,37 +133,31 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install pytest
-        run: pip install pytest==8.2.2 pytest-cov
+        run: pip install pytest==8.2.2
 
-      - name: Install pytest-cov
-        run: pip install pytest-cov==5.0.0
-
+      - name: Install fuzzywuzzy
+        run: pip install fuzzywuzzy==0.18.0
 
       - name: Run pytest and generate coverage report
         id: pytest
         run: |
           set +e
-          pytest --junitxml=pytest.xml --cov=src --cov-report=term --cov-report=json --cov-report=text:stdout --tb=short --verbose tests/ > err.log 2>&1
+          output=$(pytest --junitxml=pytest.xml --tb=short --verbose $(git ls-files 'test/test_*.py')> err.log)
           state=$(echo $?)
           err_output=$(cat err.log)
+          output="${output}\n${err_output}"
           delimiter="$(openssl rand -hex 8)"
           echo "pytest-output<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          echo "$err_output" >> "${GITHUB_OUTPUT}"
+          echo "$output" >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"
           set -e
           exit $state
         continue-on-error: True
 
-      - name: Generate coverage text file
-        run: |
-          # The 'text' report outputs to stdout, which we then redirect to a file.
-          pytest --cov=src --cov-report=text --quiet tests/ > pytest-coverage.txt || true
-
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
           junitxml-path: ./pytest.xml
-          pytest-coverage-path: ./pytest-coverage.txt
           create-new-comment: True
 
       - name: Update Pull Request
