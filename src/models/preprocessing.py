@@ -1,11 +1,11 @@
-"""
-preprocessing file.
-"""
+""" preprocessing file. """
+
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
+
 
 def logistic_regression(scaledX_train, y_train_df):
     """
@@ -32,10 +32,17 @@ def logistic_regression(scaledX_train, y_train_df):
     y_pred = logreg.predict(scaledX_train)
 
     # Get the accuracy score of logreg model and print it
-    print("Accuracy of logistic regression classifier: ", logreg.score(scaledX_train, y_train_df))
-    print( confusion_matrix(y_train_df,y_pred))
+    print(
+        "Accuracy of logistic regression classifier: ",
+        logreg.score(scaledX_train, y_train_df),
+    )
+    print(confusion_matrix(y_train_df, y_pred))
 
-    return (logreg.score(scaledX_train, y_train_df),  confusion_matrix(y_train_df,y_pred))
+    return (
+        logreg.score(scaledX_train, y_train_df),
+        confusion_matrix(y_train_df, y_pred),
+    )
+
 
 def best_logistic_regression(X_dataframe, y_dataframe):
     """
@@ -48,18 +55,21 @@ def best_logistic_regression(X_dataframe, y_dataframe):
 
     Returns:
     -----------------------------------------
-    -best_score    
+    -best_score
     -best_params
     """
     scaler = MinMaxScaler(feature_range=(0, 1))
     logreg = LogisticRegression()
-    tol = [1, 0.1, 0.01, 0.001 ,0.0001]
+    tol = [1, 0.1, 0.01, 0.001, 0.0001]
     max_iter = [50, 100, 150, 200]
     param_grid = dict(tol=tol, max_iter=max_iter)
     grid_model = GridSearchCV(estimator=logreg, param_grid=param_grid, cv=5)
     rescaledX = scaler.fit_transform(X_dataframe)
     grid_model_result = grid_model.fit(rescaledX, y_dataframe)
-    best_score, best_params = grid_model_result.best_score_, grid_model_result.best_params_
+    best_score, best_params = (
+        grid_model_result.best_score_,
+        grid_model_result.best_params_,
+    )
     print("Best: %f using %s" % (best_score, best_params))
 
     return (best_score, best_params)
