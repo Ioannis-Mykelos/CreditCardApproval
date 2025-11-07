@@ -1,0 +1,22 @@
+# Configuration file for Credit Card Approval Project
+
+data:
+  raw_data_path: "data/cc_approvals.data"
+  test_size: 0.33
+  random_state: 42
+
+preprocessing:
+  columns_to_drop: ["col11", "col13"]
+  feature_range: [0, 1]
+
+model:
+  name: "logistic_regression"
+  hyperparameters:
+    tol: [1, 0.1, 0.01, 0.001, 0.0001]
+    max_iter: [50, 100, 150, 200]
+  cv_folds: 5
+
+paths:
+  models_dir: "models"
+  logs_dir: "logs"
+

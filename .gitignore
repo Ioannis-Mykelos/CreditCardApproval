@@ -42,7 +42,9 @@ Thumbs.db
 
 # Notebooks and checkpoints #
 #############################
+# Ignore notebooks everywhere except notebooks/ directory
 *.ipynb
+!notebooks/*.ipynb
 .ipynb_checkpoints
 */.ipynb_checkpoints/*.ipynb
 
@@ -55,3 +57,11 @@ Thumbs.db
 *.xgb
 *.xlsx
 *.json
+
+# Directories to ignore (but keep structure) #
+##############################################
+models/*
+!models/.gitkeep
+logs/*
+!logs/.gitkeep
+*.ipynb_checkpoints/

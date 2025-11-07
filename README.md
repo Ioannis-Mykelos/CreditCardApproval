@@ -21,18 +21,36 @@ Luckily, this task can be automated with the power of machine learning and prett
 ```
 CreditCardApproval/
 ├── data/
-│   └── cc_approvals.data          # Credit card approval dataset
+│   └── cc_approvals.data              # Credit card approval dataset
 ├── src/
 │   ├── data_preprocessing/
-│   │   ├── dataframe_manipulation.py    # Data loading and cleaning
-│   │   └── dataframe_preprocessing.py    # Encoding and scaling
+│   │   ├── __init__.py
+│   │   ├── dataframe_manipulation.py  # Data loading and cleaning
+│   │   └── dataframe_preprocessing.py  # Encoding and scaling
 │   └── models/
-│       ├── preprocessing.py              # Model preprocessing utilities
-│       ├── training.py                   # Model training functions
-│       └── scoring.py                    # Model evaluation functions
-├── test/                                 # Test directory
-├── pyproject.toml                        # Project configuration and dependencies
-├── .pre-commit-config.yaml               # Pre-commit hooks configuration
+│       ├── __init__.py
+│       ├── preprocessing.py            # Model preprocessing utilities
+│       ├── training.py                 # Model training functions
+│       └── scoring.py                  # Model evaluation functions
+├── scripts/
+│   ├── __init__.py
+│   └── train.py                        # Main training script
+├── notebooks/                           # Jupyter notebooks for exploration
+│   ├── Credit cards project.ipynb
+│   └── ws.ipynb
+├── config/
+│   ├── __init__.py
+│   └── config.yaml                     # Configuration file
+├── tests/                               # Test directory
+│   └── __init__.py
+├── models/                              # Saved model files (gitignored)
+│   └── .gitkeep
+├── logs/                                # Log files (gitignored)
+│   └── .gitkeep
+├── utils/                               # Utility functions
+│   └── __init__.py
+├── pyproject.toml                       # Project configuration and dependencies
+├── .pre-commit-config.yaml             # Pre-commit hooks configuration
 └── README.md                            # This file
 ```
 
@@ -70,12 +88,36 @@ CreditCardApproval/
 
 ## Usage
 
-### Basic Workflow
+### Quick Start
+
+Run the complete training pipeline:
+
+```bash
+poetry run python scripts/train.py
+```
+
+This will:
+1. Load and preprocess the data
+2. Split into train/test sets
+3. Scale features
+4. Train a logistic regression model
+5. Perform hyperparameter tuning
+6. Display results
+
+### Programmatic Usage
+
+You can also use the modules programmatically:
 
 1. **Load and preprocess the data:**
    ```python
-   from src.data_preprocessing.dataframe_manipulation import load_data, handle_nan_values, rename_columns
-   from src.data_preprocessing.dataframe_preprocessing import encoding_the_columns, split_data, scale_data
+   from src.data_preprocessing import (
+       load_data,
+       handle_nan_values,
+       rename_columns,
+       encoding_the_columns,
+       split_data,
+       scale_data,
+   )
    
    # Load data
    df = load_data()
@@ -98,19 +140,13 @@ CreditCardApproval/
 
 2. **Train the model:**
    ```python
-   from src.models.preprocessing import logistic_regression, best_logistic_regression
+   from src.models import logistic_regression, best_logistic_regression
    
    # Train with default parameters
    accuracy, cm = logistic_regression(X_train_scaled, y_train)
    
    # Find best hyperparameters
    best_score, best_params = best_logistic_regression(X_train, y_train)
-   ```
-
-3. **Evaluate the model:**
-   ```python
-   from src.models.scoring import <scoring_functions>
-   # Use scoring functions to evaluate model performance
    ```
 
 ## Development

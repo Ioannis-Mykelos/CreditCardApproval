@@ -68,7 +68,7 @@ max-locals = 20
 disable = ["W0718", "W1514", "R0801"]
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 markers = [
     "sideeffect: mark a test as a having side effects, e.g. creating a costly compute cluster which might _not_ be deleted in case the test fails.",
     "slow: mark test as slow.",

@@ -16,7 +16,10 @@ def load_data()->pd.DataFrame:
     -----------------------------------------
     -dataframe  :    The credit cards dataframe
     """
-    dataframe = pd.read_csv("data/cc_approvals.data", header=None)
+    from pathlib import Path
+    project_root = Path(__file__).parent.parent.parent
+    data_path = project_root / "data" / "cc_approvals.data"
+    dataframe = pd.read_csv(data_path, header=None)
     return dataframe
 
 def handle_nan_values(dataframe: pd.DataFrame)->pd.DataFrame:
