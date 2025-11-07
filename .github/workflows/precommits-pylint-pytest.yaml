@@ -78,7 +78,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install pre-commit
-        run: pip install pre-commit==3.5.0
+        run: pip install pre-commit==4.3.0
 
       - name: Run pre-commit hooks
         id: precommit
