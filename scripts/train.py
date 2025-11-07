@@ -16,16 +16,16 @@ sys.path.insert(0, str(project_root))
 
 # Imports must come after sys.path modification to ensure correct module resolution
 from src.data_preprocessing.dataframe_manipulation import (
-    load_data,
     handle_nan_values,
+    load_data,
     rename_columns,
 )
 from src.data_preprocessing.dataframe_preprocessing import (
     encoding_the_columns,
-    split_data,
     scale_data,
+    split_data,
 )
-from src.models.preprocessing import logistic_regression, best_logistic_regression
+from src.models.preprocessing import best_logistic_regression, logistic_regression
 
 
 def main():

@@ -6,14 +6,14 @@ credit card application data.
 """
 
 from src.data_preprocessing.dataframe_manipulation import (
-    load_data,
     handle_nan_values,
+    load_data,
     rename_columns,
 )
 from src.data_preprocessing.dataframe_preprocessing import (
     encoding_the_columns,
-    split_data,
     scale_data,
+    split_data,
 )
 
 __all__ = [
@@ -24,4 +24,3 @@ __all__ = [
     "split_data",
     "scale_data",
 ]
-
