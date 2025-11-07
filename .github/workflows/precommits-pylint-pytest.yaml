@@ -168,7 +168,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = ` - Run of Pytest = `${{ steps.pytest.outcome }}`
+            const output = ` - Run of Pytest \`${{ steps.pytest.outcome }}\`
             <details><summary>Show Outputs</summary>
             ${{ steps.pytest.outputs.pytest-output }}
             </details>
