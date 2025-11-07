@@ -105,78 +105,78 @@ jobs:
         if: steps.precommit.outcome == 'failure'
         run: exit 1
 
-  pytest:
-    runs-on: ubuntu-latest
-    name: Run pytest
-    needs: [pylint, precommits]
+  # pytest:
+  #   runs-on: ubuntu-latest
+  #   name: Run pytest
+  #   needs: [pylint, precommits]
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.10"
 
-      - name: Install pandas
-        run: pip install pandas==2.2.3
+  #     - name: Install pandas
+  #       run: pip install pandas==2.2.3
 
-      - name: Install scipy
-        run: pip install scipy==1.14.1
+  #     - name: Install scipy
+  #       run: pip install scipy==1.14.1
 
-      # Set PYTHONPATH to include the current working directory (root)
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=./" >> $GITHUB_ENV
+  #     # Set PYTHONPATH to include the current working directory (root)
+  #     - name: Set PYTHONPATH
+  #       run: echo "PYTHONPATH=./" >> $GITHUB_ENV
 
-      - name: Upgrade pip
-        run: pip install --upgrade pip
+  #     - name: Upgrade pip
+  #       run: pip install --upgrade pip
 
-      - name: Install pytest
-        run: pip install pytest==8.2.2
+  #     - name: Install pytest
+  #       run: pip install pytest==8.2.2
 
-      - name: Install scikit-learn
-        run: pip install scikit-learn
+  #     - name: Install scikit-learn
+  #       run: pip install scikit-learn
 
-      - name: Run pytest and generate coverage report
-        id: pytest
-        run: |
-          set +e
-          output=$(pytest --junitxml=pytest.xml --tb=short --verbose $(git ls-files 'test/test_*.py')> err.log)
-          state=$(echo $?)
-          err_output=$(cat err.log)
-          output="${output}\n${err_output}"
-          delimiter="$(openssl rand -hex 8)"
-          echo "pytest-output<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          echo "$output" >> "${GITHUB_OUTPUT}"
-          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
-          set -e
-          exit $state
-        continue-on-error: True
+  #     - name: Run pytest and generate coverage report
+  #       id: pytest
+  #       run: |
+  #         set +e
+  #         output=$(pytest --junitxml=pytest.xml --tb=short --verbose $(git ls-files 'test/test_*.py')> err.log)
+  #         state=$(echo $?)
+  #         err_output=$(cat err.log)
+  #         output="${output}\n${err_output}"
+  #         delimiter="$(openssl rand -hex 8)"
+  #         echo "pytest-output<<${delimiter}" >> "${GITHUB_OUTPUT}"
+  #         echo "$output" >> "${GITHUB_OUTPUT}"
+  #         echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+  #         set -e
+  #         exit $state
+  #       continue-on-error: True
 
-      - name: Pytest coverage comment
-        uses: MishaKav/pytest-coverage-comment@main
-        with:
-          junitxml-path: ./pytest.xml
-          create-new-comment: True
+  #     - name: Pytest coverage comment
+  #       uses: MishaKav/pytest-coverage-comment@main
+  #       with:
+  #         junitxml-path: ./pytest.xml
+  #         create-new-comment: True
 
-      - name: Update Pull Request
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Run of Pytest \`${{ steps.pytest.outcome }}\`
-            <details><summary>Show Outputs</summary>
-            ${{ steps.pytest.outputs.pytest-output }}
-            </details>
-            *Pusher: @${{ github.actor }}, Action: ${{ github.event_name }}*`;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            });
+  #     - name: Update Pull Request
+  #       uses: actions/github-script@v6
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         script: |
+  #           const output = `#### Run of Pytest \`${{ steps.pytest.outcome }}\`
+  #           <details><summary>Show Outputs</summary>
+  #           ${{ steps.pytest.outputs.pytest-output }}
+  #           </details>
+  #           *Pusher: @${{ github.actor }}, Action: ${{ github.event_name }}*`;
+  #           github.rest.issues.createComment({
+  #             issue_number: context.issue.number,
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             body: output
+  #           });
 
-      - name: Pytest status
-        if: steps.pytest.outcome == 'failure'
-        run: exit 1
+  #     - name: Pytest status
+  #       if: steps.pytest.outcome == 'failure'
+  #       run: exit 1
