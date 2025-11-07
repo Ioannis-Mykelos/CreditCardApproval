@@ -133,10 +133,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install pytest
-        run: pip install pytest==8.2.2
-
-      - name: Install fuzzywuzzy
-        run: pip install fuzzywuzzy==0.18.0
+        run: pip install pytest==8.4.2
 
       - name: Run pytest and generate coverage report
         id: pytest
