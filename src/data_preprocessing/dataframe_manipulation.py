@@ -60,4 +60,3 @@ def rename_columns(dataframe: pd.DataFrame)->pd.DataFrame:
     dataframe.rename(columns = dictionary_columns, inplace = True)
     return dataframe
 
-    
