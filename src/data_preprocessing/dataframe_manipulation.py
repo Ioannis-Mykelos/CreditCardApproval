@@ -38,7 +38,7 @@ def handle_nan_values(dataframe: pd.DataFrame) -> pd.DataFrame:
     -----------------------------------------
     -dataframe  :   dataframe
     """
-    dataframe = dataframe.replace("?", np.nan)
+    dataframe = dataframe.replace("?", np.nan).infer_objects(copy=False)
     dataframe.fillna(dataframe.mean(), inplace=True)
     for col in dataframe.columns:
         if dataframe[col].dtypes == "object":
