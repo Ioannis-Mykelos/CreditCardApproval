@@ -2,18 +2,19 @@
 Tests for data preprocessing functions.
 """
 
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
+
 from src.data_preprocessing.dataframe_manipulation import (
-    load_data,
     handle_nan_values,
+    load_data,
     rename_columns,
 )
 from src.data_preprocessing.dataframe_preprocessing import (
     encoding_the_columns,
-    split_data,
     scale_data,
+    split_data,
 )
 
 
@@ -54,13 +55,15 @@ def test_split_data():
     for i in range(1, 17):  # Create col1 through col16
         data[f"col{i}"] = [1, 2, 3, 4, 5] * 10
     df = pd.DataFrame(data)
-    
+
     X, y, X_train, X_test, y_train, y_test = split_data(df)
     assert len(X_train) > 0
     assert len(X_test) > 0
     assert len(y_train) > 0
     assert len(y_test) > 0
-    assert X_train.shape[1] == 13  # Should have 13 features after dropping col11 and col13
+    assert (
+        X_train.shape[1] == 13
+    )  # Should have 13 features after dropping col11 and col13
     assert len(y_train) == len(X_train)  # y should match X length
     assert len(y_test) == len(X_test)  # y_test should match X_test length
 
@@ -74,4 +77,3 @@ def test_scale_data():
     assert X_test_scaled.shape == X_test.shape
     assert X_train_scaled.min() >= 0
     assert X_train_scaled.max() <= 1
-
