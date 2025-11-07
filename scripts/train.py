@@ -14,6 +14,8 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+# pylint: disable=wrong-import-position
+# Imports must come after sys.path modification to ensure correct module resolution
 from src.data_preprocessing.dataframe_manipulation import (
     load_data,
     handle_nan_values,
@@ -81,4 +83,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
