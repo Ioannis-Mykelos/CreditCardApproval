@@ -135,8 +135,8 @@ jobs:
       - name: Install pytest
         run: pip install pytest==8.2.2
 
-      - name: Install fuzzywuzzy
-        run: pip install fuzzywuzzy==0.18.0
+      - name: Install scikit-learn
+        run: pip install scikit-learn
 
       - name: Run pytest and generate coverage report
         id: pytest
